@@ -1,5 +1,5 @@
 // 1. Import Statements
-import 'css/style.css';
+import '/style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
