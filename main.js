@@ -19,15 +19,15 @@ const planets = [
     name: 'Sun',
     radius: 30,
     color: 0xffff00,
-    texture: 'images/sun.jpg',
+    texture: 'images/sun.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_saturn.jpg
     position: { x: 0, y: 0, z: 0 },
   },
   {
     name: 'Mercury',
     radius: 0.3,
     color: 0xc0c0c0,
-    texture: 'images/mercury.jpg',
-    orbit: {
+    texture: 'images/mercury.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_mercury.jpg
+    orbit: { 
       semiMajorAxis: 60,
       semiMinorAxis: 58,
     },
@@ -36,7 +36,7 @@ const planets = [
     name: 'Venus',
     radius: 0.7,
     color: 0xffa500,
-    texture: 'images/venus.jpg',
+    texture: 'images/venus.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_venus_atmosphere.jpg
     orbit: {
       semiMajorAxis: 105,
       semiMinorAxis: 103,
@@ -46,7 +46,7 @@ const planets = [
     name: 'Earth',
     radius: 3,
     color: 0x0000ff,
-    texture: 'images/earth.jpg',
+    texture: 'images/earth.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg
     orbit: {
       semiMajorAxis: 150,
       semiMinorAxis: 148,
@@ -55,7 +55,7 @@ const planets = [
           name: 'Moon',
           radius: 0.6,
           color: 0xc0c0c0,
-          texture: 'images/moon.jpg',
+          texture: 'images/moon.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_moon.jpg
           semiMajorAxis: 12,
           semiMinorAxis: 12, },
       ],
@@ -65,7 +65,7 @@ const planets = [
     name: 'Mars',
     radius: 2,
     color: 0xff0000,
-    texture: 'images/mars.jpg',
+    texture: 'images/mars.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_mars.jpg
     orbit: {
       semiMajorAxis: 240,
       semiMinorAxis: 238,
@@ -77,7 +77,7 @@ const planets = [
     name: 'Jupiter',
     radius: 24,
     color: 0xff9900,
-    texture: 'images/jupiter.jpg',
+    texture: 'images/jupiter.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_jupiter.jpg
     orbit: {
       semiMajorAxis: 400,
       semiMinorAxis: 398,
@@ -87,7 +87,7 @@ const planets = [
     name: 'Saturn',
     radius: 18,
     color: 0xffcc00,
-    texture: 'images/saturn.jpg',
+    texture: 'images/saturn.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_saturn.jpg
     orbit: {
       semiMajorAxis: 600,
       semiMinorAxis: 598,
@@ -97,7 +97,7 @@ const planets = [
     name: 'Uranus',
     radius: 12,
     color: 0x00ccff,
-    texture: 'images/uranus.jpg',
+    texture: 'images/uranus.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_uranus.jpg
     orbit: {
       semiMajorAxis: 800,
       semiMinorAxis: 798,
@@ -107,7 +107,7 @@ const planets = [
     name: 'Neptune',
     radius: 9,
     color: 0x0000ff,
-    texture: 'images/neptune.jpg',
+    texture: 'images/neptune.jpg', // Source: https://www.solarsystemscope.com/textures/download/2k_neptune.jpg
     orbit: {
       semiMajorAxis: 1000,
       semiMinorAxis: 998,
@@ -134,7 +134,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 const textureLoader = new THREE.TextureLoader();
 
-const skyboxTexture = textureLoader.load('images/stars.jpg');
+const skyboxTexture = textureLoader.load('images/stars.jpg'); // Source: https://www.solarsystemscope.com/textures/download/2k_stars_milky_way.jpg
 const skyGeometry = new THREE.SphereGeometry(2000, 32, 32);
 const skyboxMaterial = new THREE.MeshBasicMaterial({ map: skyboxTexture, side: THREE.BackSide });
 const skybox = new THREE.Mesh(skyGeometry, skyboxMaterial);
@@ -239,7 +239,7 @@ planets.forEach(planetData => {
   }
   if (planetData.name === 'Mars') {
     const loader = new OBJLoader();
-    loader.load('models/rocket_flat.obj', (obj) => {
+    loader.load('models/rocket_flat.obj', (obj) => { // Source: Brightspace, Les 12 demonstratie model
       obj.scale.set(0.5, 0.5, 0.5);
       obj.rotation.set(0, Math.PI / 2, 0);
       planetObjects['Mars'].object.add(obj);

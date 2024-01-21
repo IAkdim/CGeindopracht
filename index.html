@@ -4,9 +4,32 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Add CSS here */
+      #infoBox {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.5); /* Black with transparency */
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        width: 500px; /* Adjust width as needed */
+      }
+    </style>
   </head>
   <body>
     <canvas id="bg"></canvas>
+    <div id="infoBox">
+      <strong>Simulation Controls:</strong>
+      <ul>
+        <li><b>Change Focus:</b> Use <b>Left/Right Arrow</b> keys.</li>
+        <li><b>Lock-On Mode:</b> Press <b>'L'</b> to lock the camera onto a celestial body.</li>
+        <li><b>Move View:</b> Right-click and drag to move around.</li>
+        <li><b>Pivot View:</b> Left-click and drag to pivot the camera.</li>
+        <li><b>Zoom:</b> Use the scroll wheel to zoom in and out.</li>
+      </ul>
+    </div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
