@@ -1,5 +1,5 @@
 // 1. Import Statements
-import '/style.css';
+import 'css/style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -18,14 +18,14 @@ const planets = [
     name: 'Sun',
     radius: 30,
     color: 0xffff00,
-    texture: 'sun.jpg',
+    texture: 'images/sun.jpg',
     position: { x: 0, y: 0, z: 0 },
   },
   {
     name: 'Mercury',
     radius: 0.3,
     color: 0xc0c0c0,
-    texture: 'mercury.jpg',
+    texture: 'images/mercury.jpg',
     orbit: {
       semiMajorAxis: 60,
       semiMinorAxis: 58,
@@ -35,7 +35,7 @@ const planets = [
     name: 'Venus',
     radius: 0.7,
     color: 0xffa500,
-    texture: 'venus.jpg',
+    texture: 'images/venus.jpg',
     orbit: {
       semiMajorAxis: 105,
       semiMinorAxis: 103,
@@ -45,7 +45,7 @@ const planets = [
     name: 'Earth',
     radius: 3,
     color: 0x0000ff,
-    texture: 'earth.jpg',
+    texture: 'images/earth.jpg',
     orbit: {
       semiMajorAxis: 150,
       semiMinorAxis: 148,
@@ -54,7 +54,7 @@ const planets = [
           name: 'Moon',
           radius: 0.6,
           color: 0xc0c0c0,
-          texture: 'moon.jpg',
+          texture: 'images/moon.jpg',
           semiMajorAxis: 12,
           semiMinorAxis: 12, },
       ],
@@ -64,7 +64,7 @@ const planets = [
     name: 'Mars',
     radius: 1.5,
     color: 0xff0000,
-    texture: 'mars.jpg',
+    texture: 'images/mars.jpg',
     orbit: {
       semiMajorAxis: 240,
       semiMinorAxis: 238,
@@ -74,7 +74,7 @@ const planets = [
     name: 'Jupiter',
     radius: 15,
     color: 0xff9900,
-    texture: 'jupiter.jpg',
+    texture: 'images/jupiter.jpg',
     orbit: {
       semiMajorAxis: 400,
       semiMinorAxis: 398,
@@ -84,7 +84,7 @@ const planets = [
     name: 'Saturn',
     radius: 12,
     color: 0xffcc00,
-    texture: 'saturn.jpg',
+    texture: 'images/saturn.jpg',
     orbit: {
       semiMajorAxis: 600,
       semiMinorAxis: 598,
@@ -97,7 +97,7 @@ const planets = [
     name: 'Uranus',
     radius: 6,
     color: 0x00ccff,
-    texture: 'uranus.jpg',
+    texture: 'images/uranus.jpg',
     orbit: {
       semiMajorAxis: 800,
       semiMinorAxis: 798,
@@ -107,7 +107,7 @@ const planets = [
     name: 'Neptune',
     radius: 6,
     color: 0x0000ff,
-    texture: 'neptune.jpg',
+    texture: 'images/neptune.jpg',
     orbit: {
       semiMajorAxis: 1000,
       semiMinorAxis: 998,
@@ -127,7 +127,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 const textureLoader = new THREE.TextureLoader();
 
-const skyboxTexture = textureLoader.load('stars.jpg');
+const skyboxTexture = textureLoader.load('images/stars.jpg');
 const skyGeometry = new THREE.SphereGeometry(2000, 32, 32);
 const skyboxMaterial = new THREE.MeshBasicMaterial({ map: skyboxTexture, side: THREE.BackSide });
 const skybox = new THREE.Mesh(skyGeometry, skyboxMaterial);
