@@ -239,7 +239,7 @@ planets.forEach(planetData => {
   }
   if (planetData.name === 'Mars') {
     const loader = new OBJLoader();
-    loader.load('rocket_flat.obj', (obj) => {
+    loader.load('models/rocket_flat.obj', (obj) => {
       obj.scale.set(0.5, 0.5, 0.5);
       obj.rotation.set(0, Math.PI / 2, 0);
       planetObjects['Mars'].object.add(obj);
