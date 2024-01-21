@@ -2,6 +2,7 @@
 import '/style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
 // 2. Constants and Global Variables
 const baseSpeed = 1;
@@ -60,19 +61,21 @@ const planets = [
       ],
     },
   },
-  {
+{
     name: 'Mars',
-    radius: 1.5,
+    radius: 2,
     color: 0xff0000,
     texture: 'images/mars.jpg',
     orbit: {
       semiMajorAxis: 240,
       semiMinorAxis: 238,
+      satellites: [
+      ],
     },
   },
   {
     name: 'Jupiter',
-    radius: 15,
+    radius: 24,
     color: 0xff9900,
     texture: 'images/jupiter.jpg',
     orbit: {
@@ -82,20 +85,17 @@ const planets = [
   },
   {
     name: 'Saturn',
-    radius: 12,
+    radius: 18,
     color: 0xffcc00,
     texture: 'images/saturn.jpg',
     orbit: {
       semiMajorAxis: 600,
       semiMinorAxis: 598,
-      satellites: [
-        // Add Saturn's moons here if needed
-      ],
     },
   },
   {
     name: 'Uranus',
-    radius: 6,
+    radius: 12,
     color: 0x00ccff,
     texture: 'images/uranus.jpg',
     orbit: {
@@ -105,7 +105,7 @@ const planets = [
   },
   {
     name: 'Neptune',
-    radius: 6,
+    radius: 9,
     color: 0x0000ff,
     texture: 'images/neptune.jpg',
     orbit: {
@@ -114,6 +114,13 @@ const planets = [
     },
   },
 ];
+
+const orbiterData = {
+  name: 'Mars Orbiter',
+  semiMajorAxis: 10, // Orbit size around Mars
+  semiMinorAxis: 10, // Orbit size around Mars
+  orbitSpeed: baseSpeed / Math.sqrt(10) // Speed of orbit
+};
 
 // 4. Initialize THREE.js Environment
 const scene = new THREE.Scene();
@@ -148,12 +155,17 @@ controls.dampingFactor = 0.05;
 // 5. Utility Functions
 const updateCameraFocus = () => {
   const focusedObject = focusableObjects[currentFocusIndex];
+  let distance = 30; // Default distance
+  if (focusedObject === planetObjects['Mars'].satellites['Mars Orbiter']) {
+    distance = 4; 
+  } else if (focusedObject.geometry) {
+    distance = 4 * focusedObject.geometry.parameters.radius; 
+  }
 
   if (lockOnMode) {
     const direction = new THREE.Vector3();
     camera.getWorldDirection(direction);
 
-    const distance = 30;
     camera.position.set(
       focusedObject.position.x - direction.x * distance,
       focusedObject.position.y - direction.y * distance,
@@ -225,16 +237,30 @@ planets.forEach(planetData => {
       focusableObjects.push(satellite);
     });
   }
-
+  if (planetData.name === 'Mars') {
+    const loader = new OBJLoader();
+    loader.load('rocket_flat.obj', (obj) => {
+      obj.scale.set(0.5, 0.5, 0.5);
+      obj.rotation.set(0, Math.PI / 2, 0);
+      planetObjects['Mars'].object.add(obj);
+      planetObjects['Mars'].satellites[orbiterData.name] = obj;
+      focusableObjects.push(obj);
+    });
+  }
   if (planetData.name === 'Saturn') {
-    // Define inner and outer radius for the rings
-    const innerRadius = 14; // Slightly larger than Saturn's radius
-    const outerRadius = 22; // Arbitrary, can be adjusted for visual effect
-    const ringGeometry = new THREE.RingGeometry(innerRadius, outerRadius, 64);
-    const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide });
+    const innerRadius = 20;
+    const outerRadius = 32;
+    const ringGeometry = new THREE.RingGeometry(innerRadius, outerRadius, 64, 30);
+    const ringMaterial = new THREE.MeshPhongMaterial({ 
+      color: 0xaaaaaa, 
+      side: THREE.DoubleSide,
+    });
     const ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
-    ringMesh.rotation.x = -0.5 * Math.PI; // Rotate the ring to lie in the xy-plane
-    celestialBody.add(ringMesh);
+    ringMesh.rotation.x = 0.5 * Math.PI;
+    ringMesh.rotation.y = 0.1 * Math.PI;
+    celestialBody.add(ringMesh)
+    ringMesh.castShadow = true;
+    ringMesh.receiveShadow = true;
   }
   if (planetData.name != 'Sun') {
     celestialBody.castShadow = true;
@@ -265,6 +291,14 @@ const animate = () => {
       }
     }
   });
+  if (planetObjects['Mars'] && planetObjects['Mars'].satellites['Mars Orbiter']) {
+    const marsOrbiter = planetObjects['Mars'].satellites['Mars Orbiter'];
+    marsOrbiter.position.set(
+      orbiterData.semiMajorAxis * Math.cos(time * orbiterData.orbitSpeed), // Update X position
+      0,
+      orbiterData.semiMinorAxis * Math.sin(time * orbiterData.orbitSpeed) // Update Z position
+    );
+  }
 
   controls.update();
 
